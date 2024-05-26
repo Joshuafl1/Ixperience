@@ -1,4 +1,6 @@
 import React from "react";
+import PropTypes from "prop-types";
+import "./index.css";
 
 export default function Categories({ blogPost }) {
   return (
@@ -20,3 +22,7 @@ export default function Categories({ blogPost }) {
     </div>
   );
 }
+
+Categories.prototype = {
+  blogPost: PropTypes.object.isRequired,
+};

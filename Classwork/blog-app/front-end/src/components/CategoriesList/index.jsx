@@ -1,8 +1,9 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import "./index.css";
 
-export default function CategoryList({ categories }) {
+export default function CategoriesList({ categories }) {
   return (
     <div className="category-list">
       {categories.map((category) => {
@@ -36,3 +37,7 @@ export default function CategoryList({ categories }) {
     </div>
   );
 }
+
+CategoriesList.prototype = {
+  categories: PropTypes.array.isRequired,
+};
