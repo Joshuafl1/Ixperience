@@ -1,5 +1,4 @@
-import React from "react";
-
+import React, { useEffect, useState } from "react";
 import Navbar from "../../components/Navbar";
 import Heading from "../../components/Heading";
 import SubHeading from "../../components/SubHeading";
@@ -7,11 +6,24 @@ import BlogGrid from "../../components/BlogGrid";
 import CategoriesList from "../../components/CategoriesList";
 import Footer from "../../components/Footer";
 
-const data = require("../../dummy-data.json");
-const blogs = data.blogPosts;
-const categories = data.categories;
+import blogService from "../../Services/blogService";
 
-export default function index() {
+export default function Home() {
+  const [blogs, setBlogs] = useState();
+
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        const blogsRes = await blogService.getBlogs();
+
+        setBlogs(blogsRes);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchBlogs();
+  }, []);
+
   return (
     <>
       <Navbar />
@@ -19,7 +31,7 @@ export default function index() {
       <div className="container">
         <SubHeading subHeading={"Recent blog posts"} />
         <BlogGrid blogPosts={blogs} />
-        <CategoriesList categories={categories} />
+        <CategoriesList categories={[]} />
         <Footer />
       </div>
     </>
