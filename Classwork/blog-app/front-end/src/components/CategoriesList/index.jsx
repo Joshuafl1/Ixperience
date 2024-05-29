@@ -7,6 +7,9 @@ export default function CategoriesList({ categories }) {
   return (
     <div className="category-list">
       {categories.map((category) => {
+        if (!categories && !categories?.length) {
+          return null;
+        }
         return (
           <button
             key={category.id}
