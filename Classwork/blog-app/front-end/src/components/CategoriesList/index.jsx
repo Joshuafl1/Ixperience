@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import "./index.css";
 
 export default function CategoriesList({ categories }) {
+  console.log("categories", categories);
   return (
     <div className="category-list">
       {categories.map((category) => {

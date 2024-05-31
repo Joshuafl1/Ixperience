@@ -7,8 +7,8 @@ import Footer from "../../components/Footer";
 import "./index.css";
 import { useParams, Link } from "react-router-dom";
 
-import blogService from "../../services/blogServices";
-import categoryService from "../../services/categoryService";
+import blogService from "../../Services/blogService";
+import categoryService from "../../Services/categoryService";
 
 export default function BlogsPage() {
   const { categoryId } = useParams();
