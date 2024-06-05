@@ -7,7 +7,7 @@ const blogController = require("../src/controllers/blogs");
  * POST /api/blogs
  */
 router.post("/", (req, res) => {
-  blogController.createBlogs(req, res);
+  res.status(400).json({ message: "test message" });
 });
 
 /**
@@ -22,7 +22,7 @@ router.get("/", (req, res) => {
  * GET /api/blogs/:id
  */
 router.get("/:id", (req, res) => {
-  blogController.updateBlogByID(req, res);
+  blogController.getBlogById(req, res);
 });
 
 /**
