@@ -4,13 +4,14 @@ import PropTypes from "prop-types";
 import "./index.css";
 
 export default function CategoriesList({ categories }) {
+  if (!categories) {
+    return null;
+  }
+
   console.log("categories", categories);
   return (
     <div className="category-list">
       {categories.map((category) => {
-        if (!categories && !categories?.length) {
-          return null;
-        }
         return (
           <button
             key={category.id}

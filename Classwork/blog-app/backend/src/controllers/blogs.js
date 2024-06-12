@@ -4,14 +4,14 @@ const createBlogs = async (req, res) => {
   console.log(req.body);
 
   const blog = new Blog({
-    title: req.body.title,
-    description: req.body.description,
-    image: req.body.image,
-    content: req.body.content,
-    authorId: req.body.authorId,
-    categoryIds: req.body.categoryIds,
+    title: req?.body?.title,
+    description: req?.body?.description,
+    // image: req?.body?.image,
+    content: req?.body?.content,
+    authorId: req?.body?.authorId,
+    categoryIds: req?.body?.categoryIds,
   });
-
+  console.log("here");
   await blog.save();
 
   res.status(200).json({
@@ -39,7 +39,7 @@ const getBlogById = (req, res) => {
 const getBlogsByCategoryID = (req, res) => {
   console.log(req.params.id);
   res.status(200).json({
-    message: "Get blogs by categoryID!",
+    message: "Successfully fetched all blogs by CategoryID",
     data: [],
   });
 };

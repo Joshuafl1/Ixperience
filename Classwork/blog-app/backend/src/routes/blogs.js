@@ -1,13 +1,13 @@
 const express = require("express");
 const router = express.Router();
 
-const blogController = require("../src/controllers/blogs");
+const blogController = require("../controllers/blogs");
 
 /**
  * POST /api/blogs
  */
 router.post("/", (req, res) => {
-  res.status(400).json({ message: "test message" });
+  blogController.createBlogs(req, res);
 });
 
 /**

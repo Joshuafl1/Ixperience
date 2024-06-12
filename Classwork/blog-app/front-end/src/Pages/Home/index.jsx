@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import Navbar from "../../components/Navbar";
 import Heading from "../../components/Heading";
-import SubHeading from "../../components/Subheading";
+import SubHeading from "../../components/SubHeading";
 import BlogGrid from "../../components/BlogGrid";
 import CategoriesList from "../../components/CategoriesList";
 import Footer from "../../components/Footer";
@@ -25,14 +25,14 @@ export default function Home() {
     const fetchBlogs = async () => {
       try {
         setLoading(true);
-        const blogsRes = await blogService.fetchBlogs();
-        const categoryRes = await categoryService.fetchCategories();
+        const blogsRes = await blogService.getBlogs();
+        const categoryRes = await categoryService.getCategories();
         setBlogs(blogsRes.data.reverse());
         setCategories(categoryRes.data);
         setLoading(false);
       } catch (err) {
         setIsError(true);
-        setMessage(err);
+        setMessage(err.message);
         setLoading(false);
       }
     };
@@ -53,13 +53,13 @@ export default function Home() {
         <SubHeading subHeading={"Categories"} />
         <CategoriesList categories={categories} />
         <Footer />
-        <SuccessToast
+        {/* <SuccessToast
           show={isSuccess}
           message={message}
           onClose={() => {
             setIsSuccess(false);
           }}
-        />
+        />*/}
         <ErrorToast
           show={isError}
           message={message}

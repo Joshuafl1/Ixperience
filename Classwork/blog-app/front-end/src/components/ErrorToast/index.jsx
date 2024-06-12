@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import { Toast } from "bootstrap";
 
 export default function ErrorToast({ show, message, onClose }) {
@@ -38,7 +39,8 @@ export default function ErrorToast({ show, message, onClose }) {
             }}
           ></button>
         </div>
-        <div className="toast-body">{message}</div>
+        {console.log("message", message)}
+        {/* <div className="toast-body">{message}</div> */}
       </div>
     </div>
   );
