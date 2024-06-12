@@ -11,10 +11,8 @@ const getCategories = async () => {
     );
     const categoryAPIData = await data.json();
     console.log(categoryAPIData.message);
-    return categoryAPIData.data;
-  } catch (err) {
-    throw new Error(err);
-  }
+    return categoryAPIData;
+  } catch (err) {}
 };
 
 const categoryService = {

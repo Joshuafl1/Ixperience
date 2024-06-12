@@ -16,12 +16,12 @@ import ErrorToast from "../../components/ErrorToast";
 
 export default function BlogsPage() {
   const { categoryId } = useParams();
-  const [blogs, setBlogs] = useState();
+  const [blogs, setBlogs] = useState([]);
   const [addBlog, setAddBlog] = useState();
   const [categories, setCategories] = useState();
   const [loading, setLoading] = useState();
-  const [isSuccess, setIsSucces] = useState();
-  const [isError, setIsError] = useState();
+  const [isSuccess, setIsSucces] = useState(false);
+  const [isError, setIsError] = useState(false);
   const [message, setMessage] = useState();
 
   useEffect(() => {
@@ -30,8 +30,9 @@ export default function BlogsPage() {
       const blogsRes = await blogService.getBlogsByCategoryId(categoryId);
       const categoriesRes = await categoryService.getCategories();
 
-      setBlogs(blogsRes);
-      setCategories(categoriesRes);
+      setBlogs(blogsRes.data);
+      setMessage(blogsRes.message);
+      setCategories(categoriesRes.data);
       setLoading(false);
     };
 
@@ -65,11 +66,18 @@ export default function BlogsPage() {
     try {
       const newBlog = await blogService.createBlog(blog);
       setIsSucces(true);
-      setMessage("Blog created successfully");
+      setMessage(newBlog.message);
+      setBlogs((prev) => {
+        if (newBlog.data.categoryIds.some((x) => x.id === categoryId)) {
+          prev?.unshift(newBlog.data);
+        }
+        return prev;
+      });
     } catch (err) {
       setIsError(true);
-      setMessage(JSON.stringify(err));
+      setMessage(err);
     }
+    setAddBlog(null);
   };
 
   const CategoriesList = ({ categoryId }) => {
@@ -78,23 +86,23 @@ export default function BlogsPage() {
     }
     return categories.map((category) => {
       return categoryId === category.id ? (
-        <link
+        <Link
           className="link"
           key={category.id}
           to={"/blogs/" + category.id}
           style={{ color: "blue" }}
         >
           <p key={category.id}>{category.title}</p>
-        </link>
+        </Link>
       ) : (
-        <link
+        <Link
           className="link"
           key={category.id}
           to={"/blogs/" + category.id}
           style={{ color: "black" }}
         >
           <p key={category.id}>{category.title}</p>
-        </link>
+        </Link>
       );
     });
   };

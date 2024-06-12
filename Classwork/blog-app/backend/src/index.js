@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 
+const blogsRoutes = require("./routes/blogs");
 require("dotenv").config();
 
 const connectDB = require("./database/db");
@@ -8,8 +9,6 @@ const connectDB = require("./database/db");
 connectDB();
 
 const port = process.env.PORT || 8000;
-
-const blogsRoutes = require("../routes/blogs");
 
 const app = express();
 
