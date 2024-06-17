@@ -15,6 +15,7 @@ export default function Home() {
       try {
         const blogsRes = await blogService.fetchBlogs();
         const categoryRes = await categoryService.fetchCategories();
+        console.log("blogsRes", blogsRes);
         setBlogs(blogsRes.data);
         setCategories(categoryRes.data);
       } catch (err) {

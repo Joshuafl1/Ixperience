@@ -3,12 +3,12 @@ const mongoose = require("mongoose");
 const blogSchema = new mongoose.Schema(
   {
     author: {
-      type: Map,
-      of: mongoose.Schema.Types.Mixed,
+      type: String,
       required: true,
     },
     categoryIds: {
-      required: [mongoose.Schema.Types.ObjectId],
+      type: [mongoose.Schema.Types.ObjectId],
+      required: true,
       ref: "Category",
     },
     title: {

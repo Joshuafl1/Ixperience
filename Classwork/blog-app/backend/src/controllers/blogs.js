@@ -2,7 +2,7 @@ const Blog = require("../models/Blog");
 
 const createBlogs = async (req, res) => {
   try {
-    console.log(req.body);
+    console.log("createBlogs", req.body);
     const categoryIds = req?.body?.categories.map((x) => x.id);
     const blog = new Blog({
       title: req.body.title,
@@ -24,7 +24,7 @@ const createBlogs = async (req, res) => {
       data: blogRes,
     });
   } catch (err) {
-    res.status(500).json({ message: error.message, data: {} });
+    res.status(500).json({ message: err.message, data: {} });
   }
 };
 
@@ -35,7 +35,7 @@ const getBlogs = async (req, res) => {
       message: "Get all blogs!",
       data: blogs,
     });
-  } catch (err) {
+  } catch (error) {
     res.status(500).json({ message: error.message, data: {} });
   }
 };
@@ -51,7 +51,7 @@ const getBlogById = async (req, res) => {
     } else {
       res.status(404).json({ message: "Blog not found!", data: {} });
     }
-  } catch (err) {
+  } catch (error) {
     res.status(500).json({ message: error.message, data: {} });
   }
 };
@@ -69,7 +69,7 @@ const getBlogsByCategoryID = async (req, res) => {
       message: "Get blogs by categoryID!",
       data: blogs,
     });
-  } catch (err) {
+  } catch (error) {
     res.status(500).json({ message: error.message, data: {} });
   }
 };
