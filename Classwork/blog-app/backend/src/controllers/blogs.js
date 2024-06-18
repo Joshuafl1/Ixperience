@@ -3,23 +3,25 @@ const Blog = require("../models/Blog");
 const createBlogs = async (req, res) => {
   try {
     console.log("createBlogs", req.body);
-    const categoryIds = req?.body?.categories.map((x) => x.id);
+    const categoryIds = req?.body?.categoryId.map((x) => x.id);
     const blog = new Blog({
       title: req.body.title,
       description: req.body.description,
       image: req.body.image,
       content: req.body.content,
-      author: req.body.author,
+      authorId: req.body.authorId,
       categoryIds: categoryIds,
     });
 
     const newBlog = await blog.save();
 
-    const blogRes = await Blog.findById(newBlog._id).populate({
-      path: "categoryIds",
-    });
+    const blogRes = await Blog.findById(newBlog._id)
+      .populate({
+        path: "categoryIds",
+      })
+      .populate({ path: "authorId" });
 
-    res.status(200).json({
+    res.status(201).json({
       message: "Blog created!",
       data: blogRes,
     });
@@ -30,13 +32,15 @@ const createBlogs = async (req, res) => {
 
 const getBlogs = async (req, res) => {
   try {
-    const blogs = await Blog.find().populate({ path: "categoryIds" });
+    const blogs = await Blog.find()
+      .populate({ path: "categoryIds" })
+      .populate({ path: "authorId" });
     res.status(200).json({
       message: "Get all blogs!",
       data: blogs,
     });
-  } catch (error) {
-    res.status(500).json({ message: error.message, data: {} });
+  } catch (err) {
+    res.status(500).json({ message: err.message, data: {} });
   }
 };
 
@@ -51,8 +55,8 @@ const getBlogById = async (req, res) => {
     } else {
       res.status(404).json({ message: "Blog not found!", data: {} });
     }
-  } catch (error) {
-    res.status(500).json({ message: error.message, data: {} });
+  } catch (err) {
+    res.status(500).json({ message: err.message, data: {} });
   }
 };
 const getBlogsByCategoryID = async (req, res) => {
@@ -62,24 +66,29 @@ const getBlogsByCategoryID = async (req, res) => {
     if (req.params.id != "null" && req.params.id != "undefined") {
       filter = { categoryIds: req.params.id };
     }
-    const blogs = await Blog.find(filter).populate({
-      path: "categoryIds",
-    });
+    const blogs = await Blog.find(filter)
+      .populate({
+        path: "categoryIds",
+      })
+      .populate({ path: "authorId" });
     res.status(200).json({
       message: "Get blogs by categoryID!",
       data: blogs,
     });
-  } catch (error) {
-    res.status(500).json({ message: error.message, data: {} });
+  } catch (err) {
+    res.status(500).json({ message: err.message, data: {} });
   }
 };
 
 const updateBlogByID = async (req, res) => {
   console.log(req.body);
   try {
-    const blog = await Blog.findById(req.params.id).populate({
-      path: "categoryIds",
-    });
+    const blog = await Blog.findById(req.params.id)
+      .populate({
+        path: "categoryIds",
+      })
+      .populate({ path: "authorId" });
+
     if (blog) {
       const categoryIds = req?.body?.categories.map((x) => x.id);
       blog.authorId = req?.body?.authorId || blog.authorId;
@@ -95,8 +104,8 @@ const updateBlogByID = async (req, res) => {
     } else {
       res.status(404).json({ message: "Blog not found!", data: [] });
     }
-  } catch (error) {
-    res.status(500).json({ message: error.message, data: {} });
+  } catch (err) {
+    res.status(500).json({ message: err.message, data: {} });
   }
 };
 
@@ -110,8 +119,8 @@ const deleteBlogByID = async (req, res) => {
     } else {
       return res.status(404).json({ message: "Blog not found!" });
     }
-  } catch (error) {
-    return res.status(500).json({ message: error.message });
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
   }
 };
 

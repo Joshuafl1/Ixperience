@@ -5,6 +5,7 @@ const blogsRoutes = require("./routes/blogs");
 require("dotenv").config();
 
 const categoryRoutes = require("./routes/categories");
+const authRoutes = require("./routes/auth");
 
 const connectDB = require("./database/db");
 
@@ -22,6 +23,7 @@ app.use(express.json());
 
 app.use("/api/blogs", blogsRoutes);
 app.use("/api/categories", categoryRoutes);
+app.use("/api/auth", authRoutes);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
